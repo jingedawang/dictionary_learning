@@ -6,7 +6,7 @@ import numpy as np
 from pathlib import Path
 
 # --- Configuration ---
-DEFAULT_DATA_PATH = "dashboard_data_single_encode.json" # Path to your dashboard data
+DEFAULT_DATA_PATH = "dashboard_data_single_encode_auto_interp.json" # Path to your dashboard data
 
 # --- Helper Functions ---
 
@@ -198,6 +198,25 @@ selected_item_data = results_per_item[selected_item_idx]
 # Ensure latent indices are strings for consistent key access if they were loaded as such from JSON keys
 # However, target_latent_indices from metadata should be integers. Let's use them as is for selection.
 selected_latent_idx = st.sidebar.selectbox("Select Target Latent Index to Visualize:", target_latent_indices)
+
+# --- Display Latent Title and Explanation in Sidebar ---
+if selected_latent_idx is not None:
+    latent_interpretations = metadata.get("latent_interpretations", {})
+    # Ensure selected_latent_idx is treated as a string key if necessary, matching how it might be stored in JSON
+    # However, if latent_interpretations keys are integers, convert selected_latent_idx to int.
+    # For this example, let's assume keys in latent_interpretations are strings as often happens with JSON.
+    interpretation_key = str(selected_latent_idx) 
+    selected_latent_info = latent_interpretations.get(interpretation_key)
+
+    if selected_latent_info:
+        st.sidebar.markdown("### Latent Interpretation")
+        title = selected_latent_info.get("title", "N/A")
+        explanation = selected_latent_info.get("explanation", "N/A")
+        st.sidebar.markdown(f"**Title:** {title}")
+        st.sidebar.markdown(f"**Explanation:** {explanation}")
+    else:
+        st.sidebar.warning(f"No interpretation data found for latent {selected_latent_idx}.")
+# --- End Display Latent Title and Explanation ---
 
 st.subheader(f"Displaying Item: {selected_item_id_display}")
 st.markdown(f"**Problem:**")
