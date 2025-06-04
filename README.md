@@ -1,3 +1,29 @@
+# Model Diffing with Crosscoder
+
+This repo contains some new experiment code for our WhiteBox Proving Ground project. The main goal is to find model specific latents for base models like Llama-8B and reasoning models like DeepSeek-Llama-8B using a crosscoder.
+
+All code scripts are in the dictionary_learning/scripts directory. You can reproduce our results by running:
+
+```
+# Step 1: Collect activations from two models
+modal run dictionary_learning/scripts/collect_activations_on_modal.py
+
+# Step 2: Train a crosscoder
+modal run dictionary_learning/scripts/train_crosscoder_on_modal.py
+
+# Step 3: Use the crosscoder to find model specific latents
+modal run dictionary_learning/scripts/crosscoder_dashboard_for_math500_single_encode.py
+
+# Step 4: Auto-interpret the the latents with LLMs
+modal run dictionary_learning/scripts/auto_interp.py
+
+# Step 5: Show dashboard online
+modal run dictionary_learning/scripts/show_dashboard.py
+```
+
+You will find the top 10 reasoning specific latents in the online dashboard with highlighted tokens that activates a given latent.
+
+
 # Dictionary Learning and Crosscoders
 This repo contains a few new features compared to the original repo:
 - It is `pip` installable.

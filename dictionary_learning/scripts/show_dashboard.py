@@ -6,7 +6,7 @@ import numpy as np
 from pathlib import Path
 
 # --- Configuration ---
-DEFAULT_DATA_PATH = "dashboard_data_single_encode_auto_interp.json" # Path to your dashboard data
+DEFAULT_DATA_PATH = "dashboard_data_single_encode_both_models_auto_interp.json" # Path to your dashboard data
 
 # --- Helper Functions ---
 
